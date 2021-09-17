@@ -1,0 +1,670 @@
+ ASSIGNMENT 1
+
+1. Write a shell script to calculate simple interest.
+
+Ans: 
+echo " Enter the principle value: "
+read p
+echo " Enter the rate of interest:"
+read r
+echo " Enter the time period:"
+read t
+s=`expr $p \* $t \* $r / 100`
+echo " The simple interest is "
+echo $s
+
+ 2. Write a shell script to calculate salary from given basic.
+ Salary = basic + dp + da +hra +ma –pf 
+basic – to be taken as input 
+dp - 50 % of basic
+ da - 35 % of (basic + dp) 
+hra - 8 % of (basic + dp) 
+ma - 3 % of (basic + dp)
+ pf - 10% of (basic + dp)
+
+Ans:  #! /bin/bash
+
+echo -e "Enter the value of Basic Salary: \c"
+read basic_sal
+if [ $basic_sal -ge 0 ]
+then
+  basic=$(expr 1.0*"$basic_sal" | bc)
+  dp=$(expr 0.5*"$basic"| bc)
+  temp=$(expr "$basic"+"$dp" | bc)
+  da=$(expr 0.35*"$temp" | bc)
+  hra=$(expr 0.08*"$temp" | bc)
+  ma=$(expr 0.03*"$temp" | bc)
+  pf=$(expr 0.1*"$temp" | bc)
+  salary=$(expr "$basic"+"$dp"+"$da"+"$hra"+"$ma"-" $pf" | bc)
+ 
+  echo "Your Basic Salary: $basic "
+  echo "Your DP:  $dp "
+  echo "Your DA:            $da"
+  echo "Your HRA:   $hra"
+  echo "Your MA:   $ma"
+  echo "Your PF:   $pf"  
+  echo "                     ------------"
+  echo "Your Net Salary is  Rs. $salary "
+else
+  echo "Please enter a valid Basic Salary "
+Fi
+
+ 3. Write a shell script to calculate the average of a set of N number.
+
+Ans: echo "Enter Size(N)"
+read N
+
+i=1
+sum=0
+
+echo "Enter Numbers"
+while [ $i -le $N ]
+do
+  read num               #get number
+  sum=$((sum + num))     #sum+=num
+  i=$((i + 1))
+done
+
+avg=$(echo $sum / $N | bc -l)
+
+echo $avg
+
+ 4. Write a Unix shell script to find the sum of number to given number. e.g. if entered number is 5 then 1+2+3+4+5
+Ans: 
+# !/bin/bash
+Num=12345
+g=$Num
+s=0
+while [ $Num -gt 0 ]
+do
+	k=$(( $Num % 10 ))
+         Num=$(( $Num / 10 ))
+         s=$(( $s + $k ))
+done
+echo "sum of digits of $g is : $s"
+
+
+ 5. Write a shell script to perform like  calculator. It should ask for the number and operand from the user.
+Ans: 
+# !/bin/bash
+ 
+
+echo "Enter Two numbers : "
+read a
+read b
+ 
+echo "Enter Choice :"
+echo "1. Addition"
+echo "2. Subtraction"
+echo "3. Multiplication"
+echo "4. Division"
+read ch
+ 
+
+case $ch in
+  1)res=`echo $a + $b | bc`
+  ;;
+  2)res=`echo $a - $b | bc`
+  ;;
+  3)res=`echo $a \* $b | bc`
+  ;;
+  4)res=`echo "scale=2; $a / $b" | bc`
+  ;;
+esac
+echo "Result : $res"
+
+
+
+ASSIGNMENT2
+
+1. Write a shell script to calculate the area of rectangle. It should take the value from the command line.
+Ans:
+
+echo "Enter the width and height of rectangle:"
+read width
+ read height
+ echo "Area of the rectangle is:"
+ expr $width \* $height
+
+ 2. Write a shell script to take two numbers from  command line and show  result of dividing small number with bigger number. Also note that it should not accept zero or negative number. If user enter zero or negative number then it should prompt to input correct number after displaying proper message. 
+Ans. 
+         echo "Enter a Number"
+read a
+read b
+
+if [ $a $b -lt 0 ]
+then
+    echo "Negative"
+elif [ $a $b -gt 0 ]
+then
+    echo "Positive"
+else
+    echo "Neither Positive Nor Negative"
+fi
+res=`echo "scale=2; $a / $b" 
+echo "Result : $res"
+
+
+
+3. Write a Unix Shell Script which prints the following a. Current home directory. b. Current user name. c. The message "Today is :" with current date in MM/dd/yy format d. The message "No of users logged in :" with total no of current logged in users e. The message "Terminal :” With you own terminal number
+Ans:
+echo "Current home directory : " $PWD
+echo "Current user name : " $USER
+echo "Today is : " $(date +%D)
+echo "No. of users logged in : " $(who | wc -l)
+echo "Terminal : " $(tty)
+
+
+
+ 4. Write a shell script to create a command line calculator. e.g. input : mycal 5 + 5 Result : 10 , input : mycal 5 / 5 result : 1
+Ans:
+
+
+
+ 5. Write a shell script that that takes as command line input a number N and a Word. it then prints the word n times., one word per line
+Ans:
+n=10;
+for(( c=1; c<=n; c++)) ; 
+do 
+echo "DEVOPS" ;
+done
+
+
+
+
+
+ASSIGNMENT 3
+1. Write a shell script to rename file having extension sh to exe.
+Ans.
+clear
+echo "Enter first file name: "
+read f1
+if [ -f $f1 ]
+then
+    echo "Enter new extention: " 
+    read e
+
+    cp ${f1} ${f1}.$e
+
+#    i=basename $f1
+#    b= $i txt
+
+#    for file in *.txt
+#    i=`basename file txt`
+#    mv $file $i doc
+
+    echo $f1"."$e" file is created"
+else
+    echo "File not Exist "
+fi
+
+
+
+ 2. Write a Unix shell script to accept 10 number and tell how many are +tive, - tive and zero. Also display the in ascending order
+Ans.  echo "Enter a Number"
+read a
+read b
+
+if [ $a $b -lt 0 ]
+then
+    echo "Negative"
+elif [ $a $b -gt 0 ]
+then
+    echo "Positive"
+else
+    echo "Neither Positive Nor Negative"
+fi
+read a
+read b
+sort -n <(printf "%s\n" "$a $b")
+
+. 3. Write a shell script to examine all the number from 1 to 999 and display all those number whose sum of cube of the digit is equal to the number. e.g. 371 = 3*3*3+7*7*7+1*1*1 
+
+Ans:
+n=1
+while [ $n -le 999 ]
+do
+sum=0
+p=$n
+while [ $p -ne 0 ]
+do
+
+tmp=`expr $p \% 10`
+
+p=`expr $p \/ 10`
+
+q=`expr $tmp \* $tmp \* $tmp`
+
+sum=`expr $sum + $q`
+
+done
+if [ $sum = $n ]
+then
+echo $n
+fi
+n=`expr $n + 1`
+done
+
+4. Write a shell script to display Date in different format along with Time. 
+
+
+5. Write a shell script to accept fine number and display max and min value. If any two or three or four values are same then display proper message
+Ans. #!/bin/bash
+
+
+ASSIGNMENT4
+1. Write a shell script to find out how many file and directory are their in current directory. Also list the file and directory name separately. 
+Ans:
+#!/bin/sh
+
+
+
+ 2. Ans.Write a shell script to create a menu driven program for adding, deletion or finding a record in a database. Database should have the field like rollno, name, semester and marks of three subjects. Last option of the menu should be to exit the menu.
+Ans. 
+clear
+i="y"
+echo "Enter name of database "
+read db
+while [ $i = "y" ]
+do
+clear
+echo "1.View the Data Base "
+echo "2.View Specific Records "
+echo "3.Add Records "
+echo "4.Delete Records "
+echo "5.Exit "
+echo "Enter your choice "
+read ch
+    case $ch in
+        1)cat $db;;
+        2)echo "Enter id "
+          read id
+            grep -i "$id" $db;;
+        3)echo "Enter new std id "
+          iread tid
+          echo "Enter new name:"
+          read tnm
+          echo "Enter designation "
+          read des
+          echo "Enter college name"
+          read college
+          echo "$tid    $tnm    $des    $college">>$db;;
+        4)echo "Enter Id"
+          read id
+        # set -a
+    #    sed '/$id/d' $db>dbs1
+        grep -v "$id" $db >dbs1    
+          echo "Record is deleted"
+         cat dbs1;;           
+        5)exit;;
+        *)echo "Invalid choice ";;
+    esac
+echo "Do u want to continue ?"
+read i
+if [ $i != "y" ]
+then
+    exit
+fi
+done        
+
+ 3. Write a shell script to accept the employee name from the user and display appropriate message. Assume employee is working on a single project. Employee project details are stored in the file proj.dat and employee data are stored in
+
+Emp.dat
+ proj.dat emp.dat
+ emp_no int emp_no int proj_no int
+ proj_no int
+ dayswork int name char 
+duration int
+ if message
+ duration = dayswork , Today is last day of project. 
+duration < dayswork , you are delaying the project.
+ daysremaing <= 30 , hurry up only are remaining. 
+daysremaing > 30 , you have still to finish the project. 
+
+
+
+4. Write a shell scripts to count number of vowels in file ignoring the case.
+Ans. 
+echo  "enter filename : " 
+read f1
+v=$(echo $f1 | grep -o -i "[aeiou]" | wc -l) 
+echo $v
+
+ 
+5. Write a shell program which will work like wc. 
+Ans. 
+#!/usr/bin/bash
+
+# path to the file
+file_path="/home/amninder/Desktop/demo.txt"
+
+echo "Using method 1"
+
+
+awk 'BEGIN{c=0} //{c++} END{print "Number of words: ",c}' RS="[[:space:]]" $file_path
+
+Assignment 6
+
+          
+1. Write a script to find out String is palindrome or not.
+
+clear
+echo "Enter a string to be entered:"
+read str
+echo
+len=`echo $str | wc -c`
+len=`expr $len - 1`
+i=1
+j=`expr $len / 2`
+while test $i -le $j
+do
+k=`echo $str | cut -c $i`
+l=`echo $str | cut -c $len`
+if test $k != $l
+then
+echo "String is not palindrome"
+exit
+fi
+i=`expr $i + 1`
+len=`expr $len - 1`
+done
+echo "String is palindrome"
+ 
+ 2. Write a Shell script to calculate the gross salary of Rajesh whose Basic is input through keyboard. His DA is 34% of basic salary and HRA is 24% of Basic. PF is 11% of the basic. 
+
+#! /bin/bash
+
+echo -e "Enter the value of Basic Salary: \c"
+read basic_sal
+if [ $basic_sal -ge 0 ]
+then
+  basic=$(expr 1.0*"$basic_sal" | bc)
+  dp=$(expr 0.5*"$basic"| bc)
+  temp=$(expr "$basic"+"$dp" | bc)
+  da=$(expr 0.35*"$temp" | bc)
+  hra=$(expr 0.08*"$temp" | bc)
+  ma=$(expr 0.03*"$temp" | bc)
+  pf=$(expr 0.1*"$temp" | bc)
+  salary=$(expr "$basic"+"$dp"+"$da"+"$hra"+"$ma"-" $pf" | bc)
+ 
+  echo "Your Basic Salary: $basic "
+  echo "Your DP:  $dp "
+  echo "Your DA:            $da"
+  echo "Your HRA:   $hra"
+  echo "Your MA:   $ma"
+  echo "Your PF:   $pf"
+  echo "                     ------------"
+  echo "Your Net Salary is  Rs. $salary "
+else
+  echo "Please enter a valid Basic Salary "
+fi 
+
+
+3. Write a shell script for accepting the following information and storing it in a file. CD No., Movie Name, Language, Price and Date of release
+
+
+ 4. Write a scripts which copies the content of file1 to file2 without using cp command It should check If file has a read permissions if not it should print an error message. If file2 exits then it should ask the user whether he wants to overwrite it. 
+
+
+
+
+5. Write a shell scripts that delete all files in current directory with 0 byte.
+clear
+echo \"Enter any file name: \"
+read filenm
+if [ -e $filenm ]
+then
+    echo $filenm\" File exist\"
+    if [ -s $filenm ]
+    then
+        echo $filenm\" File has size > 0\"
+    else
+        rm $filenm
+        echo $filenm\" File is Deleted which has size = 0\"
+    fi
+else
+    echo \"File not exist\"
+fi
+
+
+
+
+
+ASSIGNMENT 7
+
+2. Write a shell to accept the details for movie LIBRARY. movie No. Name of the movie director actor actress Year of release category Validations 1) Movie no. should not exist in the file. 2) 2,3 and 4th entry cannot be blank 3) year of release cannot be >= 2008 4) Year or release should be less than 1850 5) Category can be comedy, action, thriller, Suspense The user should be able to repeatedly enter the data until it is valid. He should also be able to enter multiple records
+
+
+ 3. Write a shell procedure to delete the specified record from the library file. It should accept a movie number, check whether it is exists. If so, display the current details, ask for confirmation and then delete it from the file.
+
+ 4. Write a shell script to menu driven program that is update and delete student records.  
+Ans:
+echo "Enter name of database :"
+read db
+i="yes"
+
+ 
+
+echo ">>>>>>>>>WELCOME TO THE $db DATA BASE<<<<<<<<<<<<<<"
+while [ "$i" == "yes" ]
+do
+
+ 
+
+echo "1.View the $db  database"
+echo "2.View Specific Records of $db database"
+echo "3.Add Records in $db database "
+echo "4.Delete Records from $db database"
+echo "5.Exit "
+echo "Enter your choice "
+read choice
+
+ 
+
+    case $choice in 
+        1) #cat $db ;;
+           echo "sid   name      clg    SSC    HSC " 
+           cat $db ;;
+        
+        2)echo "Enter roll no of that student: " 
+          read sid
+          grep -i "$rn" $db;;
+        3)echo "Enter student id: "
+          read sid
+          echo "Enter name: "
+          read name
+          echo "Enter clg name : "
+          read clg
+          echo "Marks in SSC"
+          read ssc
+          echo "Marks in HSC"
+          read hsc
+         
+          echo " $sid    $name    $clg   $ssc    $hsc" >>$db;;
+        4)echo "Enter roll no of student whose records to be deleted:  "
+           read sid
+           echo "rn   name      clg    ssc    hsc  " 
+           grep -v "$sid" $db 
+           cat db;;
+        5)exit;;
+          *)echo "Invalid choice";;
+           
+    esac
+
+ 
+
+echo "Do u want to continue ?"
+read i
+if [ "$i" != "yes" ]
+then
+    exit
+fi
+done
+
+5. Write a shell script to accept 2 matrices and add them & display.
+
+Ans:matrix1=(1 2 3 4 5 6 7 8 9) #Matrix of size 3 by 3
+ matrix2=(11 12 13 14 15 16 17 18 18 19) #Matrix of size 3 by 3
+ rows=3
+ cols=3
+echo "First matrix"
+for((i=0; i<rows; i++))
+ do
+  for((j=0; j<cols; j++))
+   do
+    index=$((i*cols+j))
+ echo -n "${matrix1[index]} "
+   done
+   echo 
+done
+ echo "Second matrix"
+for((i=0; i<rows; i++))
+ do
+   for((j=0; j<cols; j++))
+   do
+index=$((i*cols+j))
+ echo -n "${matrix2[index]} "
+   done
+   echo
+ done
+ k=0
+ matrix3=()
+ for((i=0; i<rows; i++))
+ do
+   for((j=0; j<cols; j++))
+ Do
+   index=$((i*cols+j))
+     matrix3[k]=$((${matrix1[index]} + ${matrix2[index]}))
+ k=$((k+1))
+   done
+ done
+ echo "Addition of two matrix"
+ for((i=0; i<rows; i++)) 
+do
+  for((j=0; j<cols; j++))
+   do
+   index=$((i*cols+j))
+ echo -n "${matrix3[index]} "
+Done
+ Echo
+done
+ 
+
+
+
+
+
+
+
+
+
+
+Assignment-5
+
+ 1. Write a unix shell to add records to a file called item.dat The fields being itemcode, qty, sold and rate item_code to be generated qty_sold should be greater than 0 rate between 100 to 10000
+
+
+ 2. Write a Unix shell script which accepts a choice from the user and execute the corresponding option using case structure for above file structure. The format of the menu is + -> Addtion of record ! -> Modification of records - -> Deletion of records s -> Quit
+
+echo "Enter Two numbers : "
+read a
+read b
+echo "Enter Choice :"
+echo "1. Addition"
+echo "2. Subtraction"
+echo "3. Multiplication"
+echo "4. Division"
+read ch
+ 
+case $ch in
+1)res=`echo $a + $b | bc`;;
+ 
+2)res=`echo $a - $b | bc`;;
+ 
+3)res=`echo $a \* $b | bc`;;
+ 
+4)res=`echo "scale=2; $a / $b" | bc`;;
+ 
+esac
+echo "Result : $res"
+ 
+ 3. Write a shell scripts to generate random number. Allow user to guess 6 times to get the no. Print appropriate messages after each guess. e.g. Random generated is 10 Users enters 4 message : To small User enters 14 then Messge to big
+
+ 4. Write a Unix Shell script that takes a login as a command line argument and reports to you when that person logs in.
+uid=$1
+ if [ $# -eq0 ]
+then
+        echo "Enter logname"
+        read uid
+fi
+ ch=`who | grep $uid -c`
+if [ $ch -eq1 ]
+then
+        echo "Logname user loging"else
+        echo "Logname user corrent not loging"
+fi
+ echo "Total user are : `who | wc -l`"
+  5. Write shell script to accept marks of of Unix, VB.Net,PHP and calculate the average of marks and display the message as follow : if Average then display - is 70 or above "Distinction" - is 60 <= 70 "First Class" - is 50 <= 60 "Second Class" - is 40 <= 50 "Third Class" - otherwise "Fail"
+ ANS echo "Enter the five subject marks for the student"
+read m1 m2 m3 m4 m5
+sum1=`expr $m1 + $m2 + $m3 + $m4 + $m5`
+echo "Sum of 5 subjects are: " $sum1
+per=`expr $sum1 / 5`
+echo " Percentage: " $per
+if [ $per -ge60 ]
+then
+echo "You get Distinction”
+elif [ $per -ge50 ]
+then
+echo “You get First class”
+elif [ $per -ge  40 ]
+then
+echo "You get Second class"
+else
+ 	echo "You get Fail"                                                                                                                                                                        	matrix1=(1 2 3 4 5 6 7 8 9) #Matrix of size 3 by 3
+ matrix2=(11 12 13 14 15 16 17 18 18 19) #Matrix of size 3 by 3
+ rows=3
+ cols=3
+ echo "First matrix"
+ for((i=0; i<rows; i++))
+ do
+ for((j=0; j<cols; j++))
+   do
+ index=$((i*cols+j))
+ echo -n "${matrix1[index]} "
+   done
+   echo
+ done
+ echo "Second matrix"
+ for((i=0; i<rows; i++))
+ do
+ for((j=0; j<cols; j++))
+   do
+ index=$((i*cols+j))
+ echo -n "${matrix2[index]} "
+done
+   echo
+ done
+ k=0
+ matrix3=()
+ for((i=0; i<rows; i++))
+ do
+ for((j=0; j<cols; j++))
+   do
+ index=$((i*cols+j))
+ matrix3[k]=$((${matrix1[index]} + ${matrix2[index]}))
+ k=$((k+1))
+  done
+ done
+ echo "Addition of two matrix"
+ for((i=0; i<rows; i++))
+ do
+ for((j=0; j<cols; j++))
+  do
+ index=$((i*cols+j))
+ echo -n "${matrix3[index]} "
+ done
+   echo
+ done
+fi
+  
